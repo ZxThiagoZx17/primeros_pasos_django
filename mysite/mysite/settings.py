@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions', #Un marco de sesión.
     'django.contrib.messages', #Un marco de mensajería.
     'django.contrib.staticfiles', #Un marco para la gestión archivos estáticos.
+    'polls.apps.PollsConfig' #Agregamos la clase de configuracion de nuestra aplicacion que esta en apps.py, posteriormente makemigrations
 ]
 
 MIDDLEWARE = [
