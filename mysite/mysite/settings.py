@@ -30,13 +30,14 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+#Si no vamos a usar los aplicativos los podemos eliminar de la lista antes de ejecutar el migrate para que no cree las tablas en SQL
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin', #El sitio de administración. 
+    'django.contrib.auth', #Un sistema de autenticación.
+    'django.contrib.contenttypes', #Un marco para tipos de contenido.
+    'django.contrib.sessions', #Un marco de sesión.
+    'django.contrib.messages', #Un marco de mensajería.
+    'django.contrib.staticfiles', #Un marco para la gestión archivos estáticos.
 ]
 
 MIDDLEWARE = [
