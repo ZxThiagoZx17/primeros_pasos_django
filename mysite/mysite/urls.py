@@ -15,8 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+#Include nos permite hacer referencia a otros archivos urls.py
+#Siempre debes usar include() cuando incluye otros patrones de URL. admin.site.urls es la única excepción a esto.
+
+#En path se usan 4 argumentos route y view que son obligatorios y  kwargs, y name
+
+#Route: String que contiene el patron de URL, tomara primero este y luego el de URLS.py a nivel de APP.
+#View: Es una funcion de vista include() o as_view() para vistas basadas en clases
+#Kwargs: Permite pasar argumentos adicionales a la vista función o método
+#Name: Se usa para nombrar patrones de URL, permite referirse a ella en otra parte del archivo sin usar ambiguedades dando respuestas claras
+from django.urls import path, include
 
 urlpatterns = [
+    path('polls/', include("polls.urls")),
     path('admin/', admin.site.urls),
 ]
+#Para ingresa se usa http://127.0.0.1:8000/polls/primera_vista/ en este caso
