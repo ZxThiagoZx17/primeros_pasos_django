@@ -109,7 +109,8 @@ AUTH_PASSWORD_VALIDATORS = [
 #En esta linea podemos cambiar el idioma para sitios como el portal de administracion de Django IMPORTANTEEEEEEEEE
 LANGUAGE_CODE = 'es-co'
 
-TIME_ZONE = 'UTC'
+#En esta linea modificamos la zona horaria mediante la lista de TZ que se encuentra en internet
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
