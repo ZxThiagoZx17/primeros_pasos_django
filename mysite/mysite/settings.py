@@ -105,7 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+
+#En esta linea podemos cambiar el idioma para sitios como el portal de administracion de Django IMPORTANTEEEEEEEEE
+LANGUAGE_CODE = 'es-co'
 
 TIME_ZONE = 'UTC'
 
