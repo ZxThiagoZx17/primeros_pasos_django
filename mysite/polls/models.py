@@ -1,18 +1,28 @@
 #Este modulo es una fuente de informacion en la que se definen los modelos de datos (tablas) en SQL 
 from django.db import models
-
+import datetime
+from django.utils import timezone
 # Create your models here.
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
+    
+    def __str__(self):
+        return self.question_text
 
-
+    #Funcion que establece una diferencia en el tiempo que se creo la instancia y el ahora para devolver True si se creo recientemente o False de o contrario 
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+    
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
+#__str__ para la representacion de nuestros objetos
+    def __str__(self):
+        return self.choice_text
 #Cada modelo usa una subclase django.db.models.Model que nos ayuda a representar el tipo de instacia
 
 #Una vez creado lo agragamos a Settings en INSTALLED_APPS y corremos makemigrations, esto le dira a DJANGO que hemos creado nuevos modelos
@@ -39,4 +49,16 @@ COMMIT;
 Cambia tus modelos (en models.py).
 Correr para crear migraciones para esos cambiospython manage.py makemigrations
 Correr para aplicar esos cambios a la base de datos.python manage.py migrate
+"""
+
+#Podemos interactuar con la shell de django py manage.py shell, podemos modificar instancias desde ahi
+
+"""
+from polls.models import Choice, Question
+Question.objects.all()
+Question.objects.filter(id=1)
+Question.objects.filter(question_text__startswith="que")
+
+Algunos comandos para probar en shell y mirar instancias, obviamente se deben crear previamente 
+https://docs.djangoproject.com/en/5.1/intro/tutorial02/ pagina donde explica con claridad
 """
