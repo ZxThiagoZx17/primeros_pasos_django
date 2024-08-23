@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primera vista</title>
+</head>
+<body>
+    {% if ultimas_preguntas_hechas %}
+    <ul>
+    {% for pregunta in ultimas_preguntas_hechas %}
+    <!-- Pregunta me da el registro completo de la base de datos, accedemos al atributo con pregunta.attrs -->
+        <li><a href="/polls/{{ pregunta.id }}/vote/">{{ pregunta.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+    {% else %}
+        <p>No hay preguntas creadas</p>
+    {% endif %}
+</body>
+</html>
+
+<!-- Creamos documento una carpeta adicional llamada Polls para evitar colisiones con archivos que se llamen igual en otras carpetas templates -->
+
+<!-- Acabamos de crear una vista que usa un template para mostrar una lista no ordenada de las preguntas hechas, usamos un bucle para iterar en la variable ultimas_preguntas_hecha que es una lista que toma todas las preguntas de la base de datos empezando desde la ultima creada, estas tienen un hypervinculo a las otras vistas que creamos (En este caso Vote) y varia segun el ID de la pregunta-->
+
