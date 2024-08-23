@@ -37,12 +37,19 @@ def vote(request, dato_usuario_nav):
 #Creamos un directorio "templates" Django siempre buscara las plantillas ahi
 
 #Esta vendria a ser la funcion de vista usada para la plantilla
-def index(request):
-    ultimas_preguntas_hechas = Question.objects.order_by("-pub_date")[:5]
-    template = loader.get_template("polls/index.html")
-    context = {
-        "ultimas_preguntas_hechas": ultimas_preguntas_hechas,
-    }
-    return HttpResponse(template.render(context, request))
+# def index(request):
+#     ultimas_preguntas_hechas = Question.objects.order_by("-pub_date")[:5]
+#     template = loader.get_template("polls/index.html")
+#     context = {
+#         "ultimas_preguntas_hechas": ultimas_preguntas_hechas,
+#     }
+#     return HttpResponse(template.render(context, request))
 
 #Este codigo carga la platilla polls/index.html, contexto es un diccionario que mapea nombres de variables de plantilla a objetos
+
+def index(request):
+    ultimas_preguntas_hechas = Question.objects.order_by("-pub_date")[:5]
+    context = {"ultimas_preguntas_hechas": ultimas_preguntas_hechas}
+    return render(request, "polls/index.html", context)
+
+#Creamos una funcion index que hace lo mismo que la anterior, solo que simplifica un poco el proceso usando render 
