@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+#Cuando alguien solicite algo en nuestra pagina WEB siempre ira a la ruta mencionada en esta cadena
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [

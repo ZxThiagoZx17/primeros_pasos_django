@@ -9,11 +9,12 @@ urlpatterns = [
     path("primera_vista/", views.index, name="index"),
 
     #Se muestra como se definen los datos que ingresa el usuario por medio de la URL, en Views se muestra como hacer para que estos valores se vean en pantalla
+    #Especificamos el tipo de dato que el usuario debe ingresar, este llegara al argumento de la funcion que definimos en views.py
     # ex: /polls/
-    path("<int:question_id>/", views.detail, name="detail"),
+    path("<int:dato_usuario_nav>/", views.detail, name="detail"),
     # ex: /polls/5/results/
-    path("<int:question_id>/results/", views.results, name="results"),
+    path("<int:dato_usuario_nav>/results/", views.results, name="results"),
     # ex: /polls/5/vote/
-    path("<int:question_id>/vote/", views.vote, name="vote"),
+    path("<int:dato_usuario_nav>/vote/", views.vote, name="vote"),
 
 ]
