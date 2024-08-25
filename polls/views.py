@@ -59,9 +59,9 @@ def index(request):
 
 def detail(request, dato_usuario_nav):
     try:
-        question = Question.objects.get(pk=dato_usuario_nav)
+        pregunta = Question.objects.get(pk=dato_usuario_nav)
     except Question.DoesNotExist:
         raise Http404("No existe tu pregunta BB :(")
-    return render(request, "polls/detail.html", {"question": question})
+    return render(request, "polls/detail.html", {"question": pregunta})
 
 #En este caso la excepcion dara su aparicion cuando no se encuentre una pregunta con el ID solicitado
