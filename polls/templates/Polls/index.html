@@ -10,7 +10,21 @@
     <ul>
     {% for pregunta in ultimas_preguntas_hechas %}
     <!-- Pregunta me da el registro completo de la base de datos, accedemos al atributo con pregunta.attrs -->
-        <li><a href="/polls/{{ pregunta.id }}/vote/">{{ pregunta.question_text }}</a></li>
+
+    <!-- La manera de hacer este Href esta bien pero cuando tenemos proyectos con muchas plantillas es mucho trabajo cambiar una por una, hay una manera de hacer esto mas facil con la variable 'name' en patch polls.urls.py -->
+
+        <!-- <li><a href="/polls/{{ pregunta.id }}/vote/">{{ pregunta.question_text }}</a></li> -->
+
+    <!-- Aca esta el ejemplo con 'name' -->
+
+        <!-- <li><a href="">{{ pregunta.question_text }}</a></li>  SE TUVO QUE BORRAR EL CONTENIDO ACA PORQUE LA LINEA ACTUA ASI ESTE BAJO COMENT-->
+
+    <!-- Obtenemos el mismo resultado haciendolo mas escalable y practico para cambiar a futuro -->
+
+    <!-- Para diferenciar la url con otras que tengan el mismo name pero en otras apps tenemos qye agregar una variable en urls.py y modificar un poco nuestra plantilla asi:  -->
+
+        <li><a href="{% url 'polls:ejemplo_name' pregunta.id %}">{{ pregunta.question_text }}</a></li>
+
     {% endfor %}
     </ul>
     {% else %}
