@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
 from django.http import Http404
@@ -57,11 +57,19 @@ def index(request):
 
 #Ahora lo idea seria meter una excepcion para cuando arroje un error 404, en este caso vamos a reestructurar la vista detail
 
-def detail(request, dato_usuario_nav):
-    try:
-        pregunta = Question.objects.get(pk=dato_usuario_nav)
-    except Question.DoesNotExist:
-        raise Http404("No existe tu pregunta BB :(")
-    return render(request, "polls/detail.html", {"question": pregunta})
+# def detail(request, dato_usuario_nav):
+#     try:
+#         pregunta = Question.objects.get(pk=dato_usuario_nav)
+#     except Question.DoesNotExist:
+#         raise Http404("No existe tu pregunta BB :(")
+#     return render(request, "polls/detail.html", {"question": pregunta})
 
 #En este caso la excepcion dara su aparicion cuando no se encuentre una pregunta con el ID solicitado
+
+#El codigo anterior funciona bien pero lo podemos simpleficar aun mas con la funcion get_object_or_404, nos ahorramos el try y except
+
+def detail(request, dato_usuario_nav):
+    pregunta = get_object_or_404(Question, pk=dato_usuario_nav)
+    return render(request, "polls/detail.html", {"question": pregunta})
+
+#hay una funcion get_list_or_404 que devuelve Http404 si la lista esta vacia
