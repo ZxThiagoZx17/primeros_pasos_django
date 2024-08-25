@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.http import Http404
 
 from .models import Question
 
@@ -11,8 +12,8 @@ from .models import Question
 #     return HttpResponse("Hola bebe este es el index request")
 
 #Definimos las vistas para mostrar como podemos anexar datos que ingrese el usuario en la url en la pagina principal
-def detail(request, dato_usuario_nav):
-    return HttpResponse("Estas mirando la pregunta numero: %s." % dato_usuario_nav)
+# def detail(request, dato_usuario_nav):
+#     return HttpResponse("Estas mirando la pregunta numero: %s." % dato_usuario_nav)
 #Es importante usar los formatos "%s" y "%" para que funcione bien
 
 def results(request, dato_usuario_nav):
@@ -52,4 +53,15 @@ def index(request):
     context = {"ultimas_preguntas_hechas": ultimas_preguntas_hechas}
     return render(request, "polls/index.html", context)
 
-#Creamos una funcion index que hace lo mismo que la anterior, solo que simplifica un poco el proceso usando render 
+#Creamos una funcion index que hace lo mismo que la anterior, solo que simplifica un poco el proceso usando render  
+
+#Ahora lo idea seria meter una excepcion para cuando arroje un error 404, en este caso vamos a reestructurar la vista detail
+
+def detail(request, dato_usuario_nav):
+    try:
+        question = Question.objects.get(pk=dato_usuario_nav)
+    except Question.DoesNotExist:
+        raise Http404("No existe tu pregunta BB :(")
+    return render(request, "polls/detail.html", {"question": question})
+
+#En este caso la excepcion dara su aparicion cuando no se encuentre una pregunta con el ID solicitado
