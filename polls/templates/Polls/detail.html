@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,4 +10,14 @@
     <p>{{question}}</p>
     <p>Esta se creo el dia: {{question.pub_date}}</p>
 </body>
-</html>
+</html> -->
+
+<h1>{{ question.question_text }}</h1>
+<ul>
+    <!-- choice_set es related manager creado por django, este se crea debido a la relacion que hay entre los modelos question y choice lo podemos personalizar a nuestro gusto añadiendo related_name='Nombre_que_queramos'en el atributo donde hacemos la relacion foranea -->
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+
+<!-- Se crea nueva plantilla para que arroje como titulo la pregunta y liste las respuestas a cada pregunta "FK", se recomienda leer la guia de plantillas para ver como es su uso https://docs.djangoproject.com/en/5.1/topics/templates/ -->
