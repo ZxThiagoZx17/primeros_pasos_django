@@ -17,10 +17,13 @@ from .models import Question, Choice
 #     return HttpResponse("Estas mirando la pregunta numero: %s." % dato_usuario_nav)
 #Es importante usar los formatos "%s" y "%" para que funcione bien
 
-def results(request, dato_usuario_nav):
-    response = "Y Estas mirando los resultados de la pregunta %s."
-    return HttpResponse(response % dato_usuario_nav)
+# def results(request, dato_usuario_nav):
+#     response = "Y Estas mirando los resultados de la pregunta %s."
+#     return HttpResponse(response % dato_usuario_nav)
 
+def results(request, dato_usuario_nav):
+    pregunta = get_object_or_404(Question, pk=dato_usuario_nav)
+    return render(request, "polls/results.html", {"question": pregunta})
 
 # def vote(request, dato_usuario_nav):
 #     return HttpResponse("Tu voto en la pregunta es de: %s." % dato_usuario_nav)

@@ -1,0 +1,12 @@
+<!-- Creamos nueva plantilla para la vista results -->
+
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.Foranea_pregunta.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:ejemplo_name' question.id %}">Quieres votar de nuevo??</a> 
+<!-- Despues de polls:va el nombre de la url que aparece en urls.py -->
