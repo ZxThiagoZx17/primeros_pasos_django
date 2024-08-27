@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect,Http404
 from django.template import loader
 from django.db.models import F
 from django.urls import reverse
+from django.views import generic
 
 from .models import Question, Choice
 
@@ -21,9 +22,9 @@ from .models import Question, Choice
 #     response = "Y Estas mirando los resultados de la pregunta %s."
 #     return HttpResponse(response % dato_usuario_nav)
 
-def results(request, dato_usuario_nav):
-    pregunta = get_object_or_404(Question, pk=dato_usuario_nav)
-    return render(request, "polls/results.html", {"question": pregunta})
+# def results(request, dato_usuario_nav):
+#     pregunta = get_object_or_404(Question, pk=dato_usuario_nav)
+#     return render(request, "polls/results.html", {"question": pregunta})
 
 # def vote(request, dato_usuario_nav):
 #     return HttpResponse("Tu voto en la pregunta es de: %s." % dato_usuario_nav)
@@ -79,10 +80,10 @@ def vote(request, dato_usuario_nav):
 
 #Este codigo carga la platilla polls/index.html, contexto es un diccionario que mapea nombres de variables de plantilla a objetos
 
-def index(request):
-    ultimas_preguntas_hechas = Question.objects.order_by("-pub_date")[:5]
-    context = {"ultimas_preguntas_hechas": ultimas_preguntas_hechas}
-    return render(request, "polls/index.html", context)
+# def index(request):
+#     ultimas_preguntas_hechas = Question.objects.order_by("-pub_date")[:5]
+#     context = {"ultimas_preguntas_hechas": ultimas_preguntas_hechas}
+#     return render(request, "polls/index.html", context)
 
 #Creamos una funcion index que hace lo mismo que la anterior, solo que simplifica un poco el proceso usando render  
 
@@ -99,8 +100,34 @@ def index(request):
 
 #El codigo anterior funciona bien pero lo podemos simpleficar aun mas con la funcion get_object_or_404, nos ahorramos el try y except
 
-def detail(request, dato_usuario_nav):
-    pregunta = get_object_or_404(Question, pk=dato_usuario_nav)
-    return render(request, "polls/detail.html", {"question": pregunta})
+# def detail(request, dato_usuario_nav):
+#     pregunta = get_object_or_404(Question, pk=dato_usuario_nav)
+#     return render(request, "polls/detail.html", {"question": pregunta})
 
 #hay una funcion get_list_or_404 que devuelve Http404 si la lista esta vacia
+
+#Django tiene un paquete de vistas genericas ya que hay muchos patrones de diseño que son similires como recopilar datos de la bd y devolver una lista, para renovar nuestro codigo y simplificar haremos lo siguiente:
+    # Convierte el URLconf.
+    # Elimine algunas de las vistas antiguas e innecesarias.
+    # Introduzca nuevas vistas basadas en vistas genéricas de Djangoangs.
+
+# Una vez modificado urls.py comentamos las vistas viejas y creamos las nuevas:
+
+class IndexView(generic.ListView):
+    template_name = "polls/index.html"
+    context_object_name = "ultimas_preguntas_hechas" #Varible donde se establece como se llama a la lista de elementos en la plantilla, object_list es por defecto si este no se define
+
+    def get_queryset(self): #Este metodo mos sirve para definir los elementos que queremos mostrar o limitarlos en cantidad
+        """Return the last five published questions."""
+        return Question.objects.order_by("-pub_date")[:5]
+
+#Este es el modelo basico en detailview, simplemente definimos el modelo y accedemos a atributos mediante el mediante .
+
+class DetailView(generic.DetailView):
+    model = Question                
+    template_name = "polls/detail.html"
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = "polls/results.html"
