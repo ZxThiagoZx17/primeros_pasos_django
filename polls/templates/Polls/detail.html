@@ -12,12 +12,25 @@
 </body>
 </html> -->
 
-<h1>{{ question.question_text }}</h1>
-<ul>
+<!-- <h1>{{ question.question_text }}</h1>
+<ul> -->
     <!-- choice_set es related manager creado por django, este se crea debido a la relacion que hay entre los modelos question y choice lo podemos personalizar a nuestro gusto añadiendo related_name='Nombre_que_queramos'en el atributo donde hacemos la relacion foranea -->
-{% for choice in question.choice_set.all %}
+<!-- {% for choice in question.choice_set.all %}
     <li>{{ choice.choice_text }}</li>
 {% endfor %}
-</ul>
+</ul> -->
 
 <!-- Se crea nueva plantilla para que arroje como titulo la pregunta y liste las respuestas a cada pregunta "FK", se recomienda leer la guia de plantillas para ver como es su uso https://docs.djangoproject.com/en/5.1/topics/templates/ -->
+
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.Foranea_pregunta.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+    </form>
