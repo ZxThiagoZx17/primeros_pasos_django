@@ -23,13 +23,14 @@
 <!-- Se crea nueva plantilla para que arroje como titulo la pregunta y liste las respuestas a cada pregunta "FK", se recomienda leer la guia de plantillas para ver como es su uso https://docs.djangoproject.com/en/5.1/topics/templates/ -->
 
 <form action="{% url 'polls:vote' question.id %}" method="post">
+    <!-- CSRF Es falsificación de solicitud entre sitios, genera un token que revisa el servidor y aprueba la solicitud si coinciden -->
     {% csrf_token %}
     <fieldset>
         <legend><h1>{{ question.question_text }}</h1></legend>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         {% for choice in question.Foranea_pregunta.all %}
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            <input type="radio" name="choice" id="id_de_pregunta{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="id_de_pregunta{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
     </fieldset>
     <input type="submit" value="Vote">
