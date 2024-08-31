@@ -133,7 +133,7 @@ class QuestionDetailViewTests(TestCase):
         al poner la id del objeto en la URL
         """
         future_question = create_question(question_text="Future question.", days=5)
-        url = reverse("polls:especificos_name", args=(future_question.id,))
+        url = reverse("polls:ejemplo_name", args=(future_question.id,))
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
@@ -143,7 +143,7 @@ class QuestionDetailViewTests(TestCase):
         al poner la id del objeto en la URL.
         """
         past_question = create_question(question_text="Past Question.", days=-5)
-        url = reverse("polls:especificos_name", args=(past_question.id,))
+        url = reverse("polls:ejemplo_name", args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
 
