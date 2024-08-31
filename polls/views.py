@@ -131,3 +131,44 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
+
+#Django proporciona unmodulo Client para simular un usuario en el codigo a nivel de vistas, se puede usar con test.py o shell:
+
+"""
+from django.test.utils import setup_test_environment
+setup_test_environment()
+"""
+
+#setup_test_environment() instala un renderizador de plantillas que nos permitira examinar atributos en las respuestas como response.context, en este caso TIME_ZONE en settings.py debe estar configurado para evitar inconsistencias, luego importamos django.test.Client y lo instanciamos, con este simulamos la interaccion del usuario
+
+"""
+ from django.test import Client
+ # create an instance of the client for our use
+ client = Client()
+"""
+
+#A continuacion se mostraran ejemplos de como extraer informacion de la solicitud HTTP
+"""
+# Obtener respuesta de '/'
+response = client.get("/")
+Not Found: /
+
+# Debemos esperar un 404 debido a la direccion; si vemos un error de 
+# "Encabezado HTTP_HOST no válido" y una respuesta 400, es posible
+# que se haya omitido la llamada a setup_test_environment() 
+response.status_code
+404
+
+#Por el lado de /Polls/ podemos encontrar algo, usaremos reverse() en lugar
+# de la url codificada 
+from django.urls import reverse
+response = client.get(reverse("polls:index"))
+response.status_code
+200
+
+response.content
+b'\n    <ul>\n    \n        <li><a href="/polls/1/">What&#x27;s up?</a></li>\n    \n    </ul>\n\n'
+response.context["latest_question_list"]
+<QuerySet [<Question: What's up?>]>
+"""
+
