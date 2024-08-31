@@ -13,7 +13,8 @@ class Question(models.Model):
 
     #Funcion que establece una diferencia en el tiempo que se creo la instancia y el ahora para devolver True si se creo recientemente o False de o contrario 
     def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        Ahora = timezone.now()
+        return Ahora - datetime.timedelta(days=1) <= self.pub_date <= Ahora
     
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='Foranea_pregunta')
