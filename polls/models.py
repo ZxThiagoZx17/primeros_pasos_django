@@ -62,3 +62,20 @@ Question.objects.filter(question_text__startswith="que")
 Algunos comandos para probar en shell y mirar instancias, obviamente se deben crear previamente 
 https://docs.djangoproject.com/en/5.1/intro/tutorial02/ pagina donde explica con claridad
 """
+
+#Las pruebas son una parte fundamental en nuestro codigo, nos ayuda a identificar errores actualmente y a futuro, aca por ejemplo tenemos un pequeño error en la funcion Question.was_published_recently(), Devuelve True si la fecha de publicacion es en el futuro:
+
+"""
+$  python manage.py shell
+
+>>> import datetime
+>>> from django.utils import timezone
+>>> from polls.models import Question
+>>> # create a Question instance with pub_date 30 days in the future
+>>> future_question = Question(pub_date=timezone.now() + datetime.timedelta(days=30))
+>>> # was it published recently?
+>>> future_question.was_published_recently()
+True
+"""
+
+# Para hacer la prueba de manera automatizada creamos el archivo tests.py 
