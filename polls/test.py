@@ -146,3 +146,15 @@ class QuestionDetailViewTests(TestCase):
         url = reverse("polls:detail", args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+#Pudimos ver varios ejemplos de pruebas los cuales nos sirven para testear varias funcionalidades de nuestra aplicacion, con Git Hub accions cada que hagamos un commit esta hara las pruebas y dara si paso o de lo contrario, algo salio mal, no importa si son muchas pruebas o si se tienen que modificar con el tiempo, es bueno seguir las siguientes recomendaciones:
+
+#un separado TestClass para cada modelo o vista
+# un método de prueba separado para cada conjunto de condiciones que desea probar
+# nombres de métodos de prueba que describen su función
+
+#Aca solo abarcamos unas pocas pruebas, pero podemos automatizarlas y hacerlas mejor con librerias como Selenium para imitar de una manera mas similar al usuario y comprobar el comportamiento de JS en la practica,  Django incluye LiveServerTestCase para facilitar la integración con herramientas como Selenium.
+
+#Si la aplicacion es compleja se tienen que hacer pruebas para integracion continua 
+
+# Integración con coverness.py nos ayudara a detectar partes de codigo no probadas de su aplicación es verificar el código cobertura
