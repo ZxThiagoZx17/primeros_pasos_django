@@ -120,3 +120,29 @@ class QuestionIndexViewTests(TestCase):
             response.context["ultimas_preguntas_hechas"],
             [question2, question1],
         )
+
+#TODOS ESTOS METODOS ANTERIORES SON PARA LA VISTA INDEX, DE AHI EL NOMBRE DE LA CLASE QuestionIndexViewTests
+
+#Las pruebas que tenemos estan bien, sin embargo, si los ususarios adivinan la URL Pueden llegar a las preguntas futuras para votar en detail.html, por lo tanto debemos agregar una restriccion similar a DetailView en views.py
+
+#Test para Detail.html
+class QuestionDetailViewTests(TestCase):
+    def test_future_question(self):
+        """
+        Si la pregunta tiene un pub_date mayor a ahora, devolvera un 404
+        al poner la id del objeto en la URL
+        """
+        future_question = create_question(question_text="Future question.", days=5)
+        url = reverse("polls:detail", args=(future_question.id,))
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_past_question(self):
+        """
+        Si la pregunta tiene un pub_date menor a ahora, devolvera el formulario
+        al poner la id del objeto en la URL.
+        """
+        past_question = create_question(question_text="Past Question.", days=-5)
+        url = reverse("polls:detail", args=(past_question.id,))
+        response = self.client.get(url)
+        self.assertContains(response, past_question.question_text)

@@ -129,6 +129,24 @@ class DetailView(generic.DetailView):
     model = Question                
     template_name = "polls/detail.html"
 
+    def get_queryset(self):#Creamos queryset para filtar que no se muestren las preguntas con pub_day en futuro asi se sepa el id
+        """
+        Excluye las preguntas que tienen pub_date en futuro
+        """
+        #Django tiene una sintaxis especial para condiciones en los filtros de consultas, por eso el "__lte" Que significa menor o igual que
+        return Question.objects.filter(pub_date__lte=timezone.now())
+    
+        """
+        Django ofrece varios "lookups" que puedes usar para aplicar diferentes tipos de condiciones en tus consultas. Algunos ejemplos comunes incluyen:
+            Django ofrece varios "lookups" que puedes usar para aplicar diferentes tipos de condiciones en tus consultas. Algunos ejemplos comunes incluyen:
+
+            __lt: Less than (menor que).
+            __lte: Less than or equal to (menor o igual que).
+            __gt: Greater than (mayor que).
+            __gte: Greater than or equal to (mayor o igual que).
+            __exact: Exact match (coincidencia exacta).
+            __icontains: Case-insensitive containment test (contiene, sin distinguir mayúsculas de minúsculas).
+        """
 
 class ResultsView(generic.DetailView):
     model = Question
