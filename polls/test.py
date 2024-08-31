@@ -15,6 +15,25 @@ class QuestionModelosTesteo(TestCase):
         #assertIs() comprueba 2 resultados sean iguales, en este caso el resultado de was_published_recently() con False
         self.assertIs(pregunta_futura.was_published_recently(), False)
 
+    def test_was_published_recently_with_old_question(self):
+        """
+        was_published_recently() Devuelve False para fechas de publicacion
+        inferiores a 1 dia.
+        """
+        time = timezone.now() - datetime.timedelta(days=1, seconds=1)
+        old_question = Question(pub_date=time)
+        self.assertIs(old_question.was_published_recently(), False)
+
+
+    def test_was_published_recently_with_recent_question(self):
+        """
+        was_published_recently() Devuelve True para fechas de publiacion
+        dentro del mismo dia.
+        """
+        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        recent_question = Question(pub_date=time)
+        self.assertIs(recent_question.was_published_recently(), True)
+
 # Ejecutamos pruebas con el comando $ python manage.py test polls
 
 # En nuestro caso debe fallar debido a lo que explicamos anteriormente, si usamos git hub accions nos dara error en el WorkFlow
@@ -30,3 +49,5 @@ class QuestionModelosTesteo(TestCase):
 """
 
 #Modificamos la funcion was_published_recently() para que funcione de acuerdo a como la necesitamos, corremos de nuevo test y funciona bien
+
+#Creamos otras 2 funciones de test para comprobar mas posibles casos de error test_was_published_recently_with_recent_question y test_was_published_recently_with_old_question
