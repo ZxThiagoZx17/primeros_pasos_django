@@ -4,6 +4,7 @@ from django.template import loader
 from django.db.models import F
 from django.urls import reverse
 from django.views import generic
+from django.utils import timezone
 
 from .models import Question, Choice
 
@@ -119,7 +120,8 @@ class IndexView(generic.ListView):
 
     def get_queryset(self): #Este metodo mos sirve para definir los elementos que queremos mostrar o limitarlos en cantidad
         """Return the last five published questions."""
-        return Question.objects.order_by("-pub_date")[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
+    #Modificamos get_queryset para que solo devuelva preguntas con pub_date anteriores a ahora, osea que no esten en futuro
 
 #Este es el modelo basico en detailview, simplemente definimos el modelo y accedemos a atributos mediante el mediante .
 
