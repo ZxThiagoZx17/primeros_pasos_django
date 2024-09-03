@@ -70,7 +70,6 @@ python-dateutil==2.8.2
 python-dotenv==1.0.0
 python3-openid==3.2.0
 pytz==2023.3
-pywin32==306
 pyzmq==25.1.2
 requests==2.31.0
 requests-oauthlib==2.0.0
