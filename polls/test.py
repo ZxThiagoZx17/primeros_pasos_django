@@ -64,15 +64,15 @@ def create_question(question_text, days):
     return Question.objects.create(question_text=question_text, pub_date=time)
 
 
-# class QuestionIndexViewTests(TestCase):
-#     def test_no_questions(self):
-#         """
-#         Si no existen preguntas, que se muestre el mensaje apropiado
-#         """
-#         response = self.client.get(reverse("polls:index"))
-#         self.assertEqual(response.status_code, 200)
-#         self.assertContains(response, "No hay preguntas creadas")
-#         self.assertQuerySetEqual(response.context["ultimas_preguntas_hechas"], []) #Verifica que response.context["ultimas_preguntas_hechas"] nos  devuelva []
+class QuestionIndexViewTests(TestCase):
+    def test_no_questions(self):
+        """
+        Si no existen preguntas, que se muestre el mensaje apropiado
+        """
+        response = self.client.get(reverse("polls:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No hay preguntas creadas")
+        self.assertQuerySetEqual(response.context["ultimas_preguntas_hechas"], []) #Verifica que response.context["ultimas_preguntas_hechas"] nos  devuelva []
 
 #     def test_past_question(self):
 #         """
