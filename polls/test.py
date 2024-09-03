@@ -54,14 +54,14 @@ class QuestionModelosTesteo(TestCase):
 #Creamos otras 2 funciones de test para comprobar mas posibles casos de error test_was_published_recently_with_recent_question y test_was_published_recently_with_old_question
 
 
-# def create_question(question_text, days):
-#     """
-#     Se encarga de crear preguntas o instancias de la clase Question con el "question_text"
-#     Indicado en los argumentos, tambien admite un numero de dias que segun sea negativo o
-#     positivo la pub_date sera en pasado o futuro
-#     """
-#     time = timezone.now() + datetime.timedelta(days=days)
-#     return Question.objects.create(question_text=question_text, pub_date=time)
+def create_question(question_text, days):
+    """
+    Se encarga de crear preguntas o instancias de la clase Question con el "question_text"
+    Indicado en los argumentos, tambien admite un numero de dias que segun sea negativo o
+    positivo la pub_date sera en pasado o futuro
+    """
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Question.objects.create(question_text=question_text, pub_date=time)
 
 
 # class QuestionIndexViewTests(TestCase):
