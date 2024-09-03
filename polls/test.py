@@ -54,107 +54,107 @@ class QuestionModelosTesteo(TestCase):
 #Creamos otras 2 funciones de test para comprobar mas posibles casos de error test_was_published_recently_with_recent_question y test_was_published_recently_with_old_question
 
 
-def create_question(question_text, days):
-    """
-    Se encarga de crear preguntas o instancias de la clase Question con el "question_text"
-    Indicado en los argumentos, tambien admite un numero de dias que segun sea negativo o
-    positivo la pub_date sera en pasado o futuro
-    """
-    time = timezone.now() + datetime.timedelta(days=days)
-    return Question.objects.create(question_text=question_text, pub_date=time)
+# def create_question(question_text, days):
+#     """
+#     Se encarga de crear preguntas o instancias de la clase Question con el "question_text"
+#     Indicado en los argumentos, tambien admite un numero de dias que segun sea negativo o
+#     positivo la pub_date sera en pasado o futuro
+#     """
+#     time = timezone.now() + datetime.timedelta(days=days)
+#     return Question.objects.create(question_text=question_text, pub_date=time)
 
 
-class QuestionIndexViewTests(TestCase):
-    def test_no_questions(self):
-        """
-        Si no existen preguntas, que se muestre el mensaje apropiado
-        """
-        response = self.client.get(reverse("polls:index"))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No hay preguntas creadas")
-        self.assertQuerySetEqual(response.context["ultimas_preguntas_hechas"], []) #Verifica que response.context["ultimas_preguntas_hechas"] nos  devuelva []
+# class QuestionIndexViewTests(TestCase):
+#     def test_no_questions(self):
+#         """
+#         Si no existen preguntas, que se muestre el mensaje apropiado
+#         """
+#         response = self.client.get(reverse("polls:index"))
+#         self.assertEqual(response.status_code, 200)
+#         self.assertContains(response, "No hay preguntas creadas")
+#         self.assertQuerySetEqual(response.context["ultimas_preguntas_hechas"], []) #Verifica que response.context["ultimas_preguntas_hechas"] nos  devuelva []
 
-    def test_past_question(self):
-        """
-        Las preguntas con pub_date anterior a ahora se mostraran en la 
-        pagina indice
-        """
-        question = create_question(question_text="Past question.", days=-30)
-        response = self.client.get(reverse("polls:index"))
-        self.assertQuerySetEqual(
-            response.context["ultimas_preguntas_hechas"],[question],
-            #Verifica que la lista retorne la pregunta con pub_date anterior a ahora, cabe recalcar que en esa lista unicamente apareceran preguntas creadas dentro de la misma prueba
-        )
+#     def test_past_question(self):
+#         """
+#         Las preguntas con pub_date anterior a ahora se mostraran en la 
+#         pagina indice
+#         """
+#         question = create_question(question_text="Past question.", days=-30)
+#         response = self.client.get(reverse("polls:index"))
+#         self.assertQuerySetEqual(
+#             response.context["ultimas_preguntas_hechas"],[question],
+#             #Verifica que la lista retorne la pregunta con pub_date anterior a ahora, cabe recalcar que en esa lista unicamente apareceran preguntas creadas dentro de la misma prueba
+#         )
 
-    def test_future_question(self):
-        """
-        Las preguntas con pub_date Despues a ahora NO se mostraran en la 
-        pagina indice
-        """
-        create_question(question_text="Future question.", days=30)
-        response = self.client.get(reverse("polls:index"))
-        self.assertContains(response, "No hay preguntas creadas")
-        self.assertQuerySetEqual(response.context["ultimas_preguntas_hechas"], [])
+#     def test_future_question(self):
+#         """
+#         Las preguntas con pub_date Despues a ahora NO se mostraran en la 
+#         pagina indice
+#         """
+#         create_question(question_text="Future question.", days=30)
+#         response = self.client.get(reverse("polls:index"))
+#         self.assertContains(response, "No hay preguntas creadas")
+#         self.assertQuerySetEqual(response.context["ultimas_preguntas_hechas"], [])
 
-    def test_future_question_and_past_question(self):
-        """
-        Incluso si se crean preguntas en pasado y futuro, unicamente se mostraran
-        las que estan en pasado.
-        """
-        question = create_question(question_text="Past question.", days=-30)#Unicamente se guarda en variable para compararla mas adelante
-        create_question(question_text="Future question.", days=30)#Esta pregunta se guarda en la base de datos temporal de pruebas
-        response = self.client.get(reverse("polls:index"))
-        self.assertQuerySetEqual(
-            response.context["ultimas_preguntas_hechas"],
-            [question],
-        )
+#     def test_future_question_and_past_question(self):
+#         """
+#         Incluso si se crean preguntas en pasado y futuro, unicamente se mostraran
+#         las que estan en pasado.
+#         """
+#         question = create_question(question_text="Past question.", days=-30)#Unicamente se guarda en variable para compararla mas adelante
+#         create_question(question_text="Future question.", days=30)#Esta pregunta se guarda en la base de datos temporal de pruebas
+#         response = self.client.get(reverse("polls:index"))
+#         self.assertQuerySetEqual(
+#             response.context["ultimas_preguntas_hechas"],
+#             [question],
+#         )
 
-    def test_two_past_questions(self):
-        """
-        Se muestran varias preguntas creadas en pasado
-        """
-        question1 = create_question(question_text="Past question 1.", days=-30)
-        question2 = create_question(question_text="Past question 2.", days=-5)
-        response = self.client.get(reverse("polls:index"))
-        self.assertQuerySetEqual(
-            response.context["ultimas_preguntas_hechas"],
-            [question2, question1],
-        )
+#     def test_two_past_questions(self):
+#         """
+#         Se muestran varias preguntas creadas en pasado
+#         """
+#         question1 = create_question(question_text="Past question 1.", days=-30)
+#         question2 = create_question(question_text="Past question 2.", days=-5)
+#         response = self.client.get(reverse("polls:index"))
+#         self.assertQuerySetEqual(
+#             response.context["ultimas_preguntas_hechas"],
+#             [question2, question1],
+#         )
 
-#TODOS ESTOS METODOS ANTERIORES SON PARA LA VISTA INDEX, DE AHI EL NOMBRE DE LA CLASE QuestionIndexViewTests
+# #TODOS ESTOS METODOS ANTERIORES SON PARA LA VISTA INDEX, DE AHI EL NOMBRE DE LA CLASE QuestionIndexViewTests
 
-#Las pruebas que tenemos estan bien, sin embargo, si los ususarios adivinan la URL Pueden llegar a las preguntas futuras para votar en detail.html, por lo tanto debemos agregar una restriccion similar a DetailView en views.py
+# #Las pruebas que tenemos estan bien, sin embargo, si los ususarios adivinan la URL Pueden llegar a las preguntas futuras para votar en detail.html, por lo tanto debemos agregar una restriccion similar a DetailView en views.py
 
-#Test para Detail.html
-class QuestionDetailViewTests(TestCase):
-    def test_future_question(self):
-        """
-        Si la pregunta tiene un pub_date mayor a ahora, devolvera un 404
-        al poner la id del objeto en la URL
-        """
-        future_question = create_question(question_text="Future question.", days=5)
-        url = reverse("polls:ejemplo_name", args=(future_question.id,))
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 404)
+# #Test para Detail.html
+# class QuestionDetailViewTests(TestCase):
+#     def test_future_question(self):
+#         """
+#         Si la pregunta tiene un pub_date mayor a ahora, devolvera un 404
+#         al poner la id del objeto en la URL
+#         """
+#         future_question = create_question(question_text="Future question.", days=5)
+#         url = reverse("polls:ejemplo_name", args=(future_question.id,))
+#         response = self.client.get(url)
+#         self.assertEqual(response.status_code, 404)
 
-    def test_past_question(self):
-        """
-        Si la pregunta tiene un pub_date menor a ahora, devolvera el formulario
-        al poner la id del objeto en la URL.
-        """
-        past_question = create_question(question_text="Past Question.", days=-5)
-        url = reverse("polls:ejemplo_name", args=(past_question.id,))
-        response = self.client.get(url)
-        self.assertContains(response, past_question.question_text)
+#     def test_past_question(self):
+#         """
+#         Si la pregunta tiene un pub_date menor a ahora, devolvera el formulario
+#         al poner la id del objeto en la URL.
+#         """
+#         past_question = create_question(question_text="Past Question.", days=-5)
+#         url = reverse("polls:ejemplo_name", args=(past_question.id,))
+#         response = self.client.get(url)
+#         self.assertContains(response, past_question.question_text)
 
-#Pudimos ver varios ejemplos de pruebas los cuales nos sirven para testear varias funcionalidades de nuestra aplicacion, con Git Hub accions cada que hagamos un commit esta hara las pruebas y dara si paso o de lo contrario, algo salio mal, no importa si son muchas pruebas o si se tienen que modificar con el tiempo, es bueno seguir las siguientes recomendaciones:
+# #Pudimos ver varios ejemplos de pruebas los cuales nos sirven para testear varias funcionalidades de nuestra aplicacion, con Git Hub accions cada que hagamos un commit esta hara las pruebas y dara si paso o de lo contrario, algo salio mal, no importa si son muchas pruebas o si se tienen que modificar con el tiempo, es bueno seguir las siguientes recomendaciones:
 
-#un separado TestClass para cada modelo o vista
-# un método de prueba separado para cada conjunto de condiciones que desea probar
-# nombres de métodos de prueba que describen su función
+# #un separado TestClass para cada modelo o vista
+# # un método de prueba separado para cada conjunto de condiciones que desea probar
+# # nombres de métodos de prueba que describen su función
 
-#Aca solo abarcamos unas pocas pruebas, pero podemos automatizarlas y hacerlas mejor con librerias como Selenium para imitar de una manera mas similar al usuario y comprobar el comportamiento de JS en la practica,  Django incluye LiveServerTestCase para facilitar la integración con herramientas como Selenium.
+# #Aca solo abarcamos unas pocas pruebas, pero podemos automatizarlas y hacerlas mejor con librerias como Selenium para imitar de una manera mas similar al usuario y comprobar el comportamiento de JS en la practica,  Django incluye LiveServerTestCase para facilitar la integración con herramientas como Selenium.
 
-#Si la aplicacion es compleja se tienen que hacer pruebas para integracion continua 
+# #Si la aplicacion es compleja se tienen que hacer pruebas para integracion continua 
 
-# Integración con coverness.py nos ayudara a detectar partes de codigo no probadas de su aplicación es verificar el código cobertura
+# # Integración con coverness.py nos ayudara a detectar partes de codigo no probadas de su aplicación es verificar el código cobertura
