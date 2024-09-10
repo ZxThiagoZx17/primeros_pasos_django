@@ -1,0 +1,15 @@
+/* Se crea nuevo directorio static en el que se guardaran archivos estaticos  */
+
+/* django.contrib.staticfiles es para: recopila archivos estáticos desde cada una de sus aplicaciones (y cualquier otro lugar que especifique)  */
+
+/* Añadimos un estilo */
+/* Posterior a esto tenemos que ir al archivo html en este caso index a poner lo siguiente */
+
+/* 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+*/
+li a {
+    color: green;
+}
