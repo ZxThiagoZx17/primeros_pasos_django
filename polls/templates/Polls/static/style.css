@@ -10,6 +10,6 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 */
-li a {
+li a:hover {
     color: green;
 }
