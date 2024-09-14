@@ -13,3 +13,16 @@
 li a:hover {
     color: green;
 }
+li a:link {
+    color: green;
+}
+li a:visited {
+    color: green;
+}
+li a:active {
+    color: green;
+}
+
+body {
+    background: blue;
+}
