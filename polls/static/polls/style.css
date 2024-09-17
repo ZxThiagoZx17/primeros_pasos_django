@@ -1,4 +1,4 @@
-/* Se crea nuevo directorio static en el que se guardaran archivos estaticos  */
+/* Se crea nuevo directorio static(se crea en la carpeta raiz de la app y se le agrega polls dentro) en el que se guardaran archivos estaticos  */
 
 /* django.contrib.staticfiles es para: recopila archivos estáticos desde cada una de sus aplicaciones (y cualquier otro lugar que especifique)  */
 
@@ -24,5 +24,6 @@ li a:active {
 }
 
 body {
-    background: blue;
+    background: white url("images/background.jpg") no-repeat;
 }
+/* Siempre deberías usar rutas relativas para vincular sus archivos estáticos entre sí */
