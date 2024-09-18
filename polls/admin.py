@@ -26,10 +26,14 @@ class QuestionAdmin(admin.ModelAdmin):
 #A continuacion vamos a agregar una linea que nos permita agregar varias choices al la hora de agregar una Question
 #Comentamos el register() de choice porque ahora lo haremos dentro de question
 
-class ChoiceInline(admin.StackedInline):
+# class ChoiceInline(admin.StackedInline):
+#     model = Choice
+#     extra = 3
+
+class ChoiceInline(admin.TabularInline): #TabularInline nos sirve para tabular de mejor manera el area para agregar choices
     model = Choice
     extra = 3
-
+    
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {"fields": ["question_text"]}),
