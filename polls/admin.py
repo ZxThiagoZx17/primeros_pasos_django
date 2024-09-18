@@ -4,7 +4,7 @@ from .models import Question, Choice
 # Para hacer que los modelos que acabo de crear en models.py sean editables en el portal de administracion de Django necesito registrarlos en admin.py asi:
 
 # admin.site.register(Question) #Con esta linea Django construye la presentacion del formulario de Question
-admin.site.register(Choice)
+# admin.site.register(Choice)
 
 #El panel de administracion de Django nos permitira usar operaciones CRUD con la base de datos
 
@@ -22,5 +22,19 @@ class QuestionAdmin(admin.ModelAdmin):
         (None, {"fields": ["question_text"]}),
         ("Infromatiosn de fechaison", {"fields": ["pub_date"]}),
     ]
+
+#A continuacion vamos a agregar una linea que nos permita agregar varias choices al la hora de agregar una Question
+#Comentamos el register() de choice porque ahora lo haremos dentro de question
+
+class ChoiceInline(admin.StackedInline):
+    model = Choice
+    extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {"fields": ["question_text"]}),
+        ("Infromatiosn de fechaison", {"fields": ["pub_date"]}),
+    ]
+    inlines = [ChoiceInline] #Se añade esta para que Choice se pueda crear dentro de Question
 
 admin.site.register(Question, QuestionAdmin)
