@@ -41,4 +41,8 @@ class QuestionAdmin(admin.ModelAdmin):
     ]
     inlines = [ChoiceInline] #Se añade esta para que Choice se pueda crear dentro de Question
 
+    # En el panel donde se observan las preguntas, deseamos añadir mas informacion como la pregunta, fecha de publicacion y si ha sido publicada recientemente usamos esta linea:
+
+    list_display = ["question_text", "pub_date", "was_published_recently"]
+
 admin.site.register(Question, QuestionAdmin)
