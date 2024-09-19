@@ -45,5 +45,5 @@ class QuestionAdmin(admin.ModelAdmin):
 
     list_display = ["question_text", "pub_date", "was_published_recently"]
     list_filter = ["pub_date"] #Se agrega linea para filtro por fecha
-    search_fields = ["question_text"] #Se agrega capacidad de busqueda por nombre de la pregunta
+    search_fields = ["question_text"] #Se agrega capacidad de busqueda por nombre de la pregunta, usa la sentencia LIKE de SQL para la busqueda
 admin.site.register(Question, QuestionAdmin)
