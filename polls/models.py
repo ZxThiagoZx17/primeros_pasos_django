@@ -2,20 +2,40 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib import admin #Decorador para usar display()
+
 # Create your models here.
 
+# class Question(models.Model):
+#     question_text = models.CharField(max_length=200)
+#     pub_date = models.DateTimeField("date published")
+    
+#     def __str__(self):
+#         return self.question_text
+
+#     #Funcion que establece una diferencia en el tiempo que se creo la instancia y el ahora para devolver True si se creo recientemente o False de o contrario 
+#     def was_published_recently(self):
+#         Ahora = timezone.now()
+#         return Ahora - datetime.timedelta(days=1) <= self.pub_date <= Ahora
+    
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
     
     def __str__(self):
         return self.question_text
+    
+    @admin.display(
+        boolean=True,
+        ordering="pub_date",
+        description="Published recently?",
+    )
 
-    #Funcion que establece una diferencia en el tiempo que se creo la instancia y el ahora para devolver True si se creo recientemente o False de o contrario 
     def was_published_recently(self):
         Ahora = timezone.now()
         return Ahora - datetime.timedelta(days=1) <= self.pub_date <= Ahora
-    
+# Modelo para mejorar la apariencia en el panel de administracion de DJANGO
+
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='Foranea_pregunta')
     choice_text = models.CharField(max_length=200)
@@ -80,3 +100,8 @@ True
 """
 
 # Para hacer la prueba de manera automatizada creamos el archivo tests.py 
+
+# Podemos mejorar aun mas el estilo en el panel de administracion de Django con display() 
+
+# Se deja en las lineas de arriba
+
