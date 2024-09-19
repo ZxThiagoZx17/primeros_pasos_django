@@ -44,6 +44,6 @@ class QuestionAdmin(admin.ModelAdmin):
     # En el panel donde se observan las preguntas, deseamos añadir mas informacion como la pregunta, fecha de publicacion y si ha sido publicada recientemente usamos esta linea:
 
     list_display = ["question_text", "pub_date", "was_published_recently"]
-    list_filter = ["pub_date"] #Se agrega linea para filtro
-
+    list_filter = ["pub_date"] #Se agrega linea para filtro por fecha
+    search_fields = ["question_text"] #Se agrega capacidad de busqueda por nombre de la pregunta
 admin.site.register(Question, QuestionAdmin)
